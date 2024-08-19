@@ -1,0 +1,86 @@
+package br.com.collections.set.pesquisa.agendacontatos;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class AgendaContatos {
+
+    private Set<Contato> contatoSet;
+
+    public AgendaContatos() {
+        this.contatoSet = new HashSet<>();
+    }
+
+    public void adicionarContato(String nome, int numero) {
+        contatoSet.add(new Contato(nome, numero));
+    }
+
+    public void exibirContatos() {
+        if (!contatoSet.isEmpty()) {
+            System.out.println("\n");
+            System.out.println(contatoSet);
+        } else {
+            System.out.println("Lista de contato vazio!");
+        }
+    }
+
+    public Set<Contato> pesquisarPorNome(String nome) {
+        Set<Contato> contatosPorNome = new HashSet<>();
+        if (!contatoSet.isEmpty()) {
+            System.out.println("\n");
+            for (Contato c : contatoSet) {
+                if (c.getNome().startsWith(nome)) {
+                    contatosPorNome.add(c);
+                }
+            }
+            return contatosPorNome;
+        } else {
+            throw new RuntimeException("Lista de contatos vazio!");
+        }
+    }
+
+    public Contato atualizarNumeroContato(String nome, int novoNumero) {
+        Contato contatoAtualizado = null;
+        if (!contatoSet.isEmpty()) {
+            System.out.println("\n");
+            for (Contato c : contatoSet) {
+                if (c.getNome().equalsIgnoreCase(nome)) {
+                    c.setNumero(novoNumero);
+                    contatoAtualizado = c;
+                    break;
+                }
+            }
+            return contatoAtualizado;
+        } else {
+            throw new RuntimeException("Lista de contatos vazio!");
+        }
+    }
+
+    public static void main(String[] args) {
+        AgendaContatos agendaContatos = new AgendaContatos();
+        agendaContatos.exibirContatos();
+
+        // Adicionando contatos à agenda
+        agendaContatos.adicionarContato("João", 123456789);
+        agendaContatos.adicionarContato("Maria", 987654321);
+        agendaContatos.adicionarContato("Maria Fernandes", 55555555);
+        agendaContatos.adicionarContato("Ana", 88889999);
+        agendaContatos.adicionarContato("Fernando", 77778888);
+        agendaContatos.adicionarContato("Carolina", 55555555);
+
+        // Exibindo os contatos na agenda
+        agendaContatos.exibirContatos();
+
+        // Pesquisando contatos pelo nome
+        System.out.println(agendaContatos.pesquisarPorNome("Maria"));
+
+        // Atualizando o número de um contato
+        Contato contatoAtualizado = agendaContatos.atualizarNumeroContato("Carolina", 44443333);
+        System.out.println("Contato atualizado: " + contatoAtualizado);
+
+        // Exibindo os contatos atualizados na agenda
+        System.out.println("Contatos na agenda após atualização:");
+        agendaContatos.exibirContatos();
+
+    }
+}
